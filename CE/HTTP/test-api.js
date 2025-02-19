@@ -4,14 +4,12 @@ const port = 3000;
 const server = http.createServer(async(req,res) => {
     console.log('New request received');
     res.writeHead(200, { 'Content-Type': 'text/html'});
-    // const response = await fetch("https://dummyjson.com/products")
-    // const data = await response.json();
 
-    const response = await axios.get("https://dummyjson.com/products")
-    const productsdata = response.data.products;
+    const response = await axios.get("https://api.github.com/search/users?q=location:ghaziabad")
+    const productsdata = response.data.items;
 let fromdata = `<html><head></head><body>` 
-    productsdata.forEach((product)=>{
-        fromdata += `<div><img src="${product.thumbnail}"></div>`   
+    productsdata.forEach((items)=>{
+        fromdata += `<div><img src="${items.avatar_url}"></div>`   
     }); 
     fromdata +=`<body><html>`  
     res.end(fromdata);
